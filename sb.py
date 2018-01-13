@@ -35,11 +35,11 @@ while True:
             #    print("[ {} ] {}".format(str(op.type), str(OpType._VALUES_TO_NAMES[op.type])))
 #=========================================================================================================================================#
             if op.type == 17:
-                group = random.choice(KAC).getGroup(op.param1)
-                cb = Message()
-                cb.to = op.param1
-                cb.text = random.choice(KAC).getContact(op.param2).displayName + " \n🏡ยินดีต้อนรับเข้าสู่...\n" + group.name + "\n🔰เข้ามาแล้วอย่ารีบออกกันน้า\n🔰อยู่ส่องเรทก่อนได้จ้า\n🔰มั่นใจค่อยลง ท้าวบ้านนี้ใจดี\n🔰น่ารัก ส่งยอดตรงเวลาไม่บิน\n🔰ไม่แขวนยอดแน่นอนจ้า" + "\n\n👤โหน่งติดตั้งบอทสิริ\n📛ติดต่อสอบถาม : line://ti/p/~nong1426"
-                random.choice(KAC).sendMessage(cb)
+                ginfo = client.getGroup(op.param1)
+                contact = client.getContact(op.param2)
+                image = "http://dl.profile.line-cdn.net/" + contact.pictureStatus
+                client.sendImageWithURL(op.param1,image)
+                client.sendText(op.param1,"Hay    "+client.getContact(op.param2).displayName +"\nWelcome to"+"\nGroup》》"+ str(ginfo.name))
             if op.type == 25:
                 msg = op.message
                 text = msg.text
@@ -54,6 +54,28 @@ while True:
                             if text.lower() == 'me':
                                 client.sendMessage(receiver, None, contentMetadata={'mid': sender}, contentType=13)
                                 client.tag(receiver, sender)
+                            elif text.lower() == 'announce':
+                                gett = client.getChatRoomAnnouncements(receiver)
+                                for a in gett:
+                                    aa = client.getContact(a.creatorMid).displayName
+                                    bb = a.contents
+                                    cc = bb.link
+                                    textt = bb.text
+                                    client.sendText(receiver, 'Link: ' + str(cc) + '\nText: ' + str(textt) + '\nMaker: ' + str(aa))
+                            elif text.lower() == 'unsend me':
+                                client.unsendMessage(msg_id)
+                            elif text.lower() == 'getsq':
+                                a = client.getJoinedSquares()
+                                squares = a.squares
+                                members = a.members
+                                authorities = a.authorities
+                                statuses = a.statuses
+                                noteStatuses = a.noteStatuses
+                                txt = str(squares)+'\n\n'+str(members)+'\n\n'+str(authorities)+'\n\n'+str(statuses)+'\n\n'+str(noteStatuses)+'\n\n'
+                                txt2 = ''
+                                for i in range(len(squares)):
+                                    txt2 += str(i+1)+'. '+str(squares[i].invitationURL)+'\n'
+                                client.sendText(receiver, txt2)
                             elif 'lc ' in text.lower():
                                 try:
                                     typel = [1001,1002,1003,1004,1005,1006]
