@@ -54,6 +54,10 @@ while True:
                             if text.lower() == 'me':
                                 client.sendMessage(receiver, None, contentMetadata={'mid': sender}, contentType=13)
                                 client.tag(receiver, sender)
+                            elif ("Gn " in msg.text):
+                                 X = client.getGroup(msg.to)
+                                 X.name = msg.text.replace("Gn ","")
+                                 client.updateGroup(X)
                             elif text.lower() == 'announce':
                                 gett = client.getChatRoomAnnouncements(receiver)
                                 for a in gett:
