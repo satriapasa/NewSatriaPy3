@@ -30,7 +30,7 @@ class LineServer(object):
     APP_TYPE    = ApplicationType.IOS
     APP_NAME    = 'IOSIPAD\t7.18.1\tiPhone OS\t11.2.5'
     CARRIER     = '51089, 1-0'
-    SYSTEM_NAME = 'FDLRCN'
+    SYSTEM_NAME = 'SATRIA'
     IP_ADDR     = '8.8.8.8'
     EMAIL_REGEX = re.compile(r"[^@]+@[^@]+\.[^@]+")
 
