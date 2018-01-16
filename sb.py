@@ -5,9 +5,9 @@ import json, time, random, tempfile, os, sys
 from gtts import gTTS
 from googletrans import Translator
 
-#client = LineClient()
-client = LineClient(id='email kamu', passwd='pasword kamu')
-#client = LineClient(authToken='AUTHTOKEN')
+client = LineClient() #untuk login qr in here
+#client = LineClient(id='email kamu', passwd='pasword kamu') #login email in here
+#client = LineClient(authToken='AUTHTOKEN') #login token in here
 client.log("Auth Token : " + str(client.authToken))
 
 channel = LineChannel(client)
