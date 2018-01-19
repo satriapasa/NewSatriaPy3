@@ -10,8 +10,9 @@ Versi login ada 3 versi.. email.. qr dan token
 
 gunakan bot dengan bijak
 
-'''ssh
+#Spesial Tanks To
 
-$pip install thrift
+Bang FadilRahman
 
-'''
+Bang Shoppeng
+
