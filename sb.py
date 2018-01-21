@@ -13,6 +13,34 @@ client.log("Auth Token : " + str(client.authToken))
 channel = LineChannel(client)
 client.log("Channel Access Token : " + str(channel.channelAccessToken))
 
+helpMessage ="""  
+─┅═✥Help Command✥═┅─
+【1】 Help
+【2】 Me
+【3】 Gc
+【4】 Yt:
+【5】 Gn
+【6】 Getsq
+【7】 Image:
+【8】 Say:
+【9】 Unsend me
+【10】 Sp
+【11】 Lc
+【12】 Sticker
+【13】 Apakah
+【14】 Sytr:
+【15】 Tr:
+【16】 Spict
+【17】 Scover
+【18】 Tagall
+【19】 Ceksider
+【20】 Offread
+【21】 Mode:self
+【22】 Mode:publik
+【23】 Restart
+【24】 Papay
+"""
+
 poll = LinePoll(client)
 mode='self'
 cctv={
@@ -34,6 +62,93 @@ while True:
             #if op.type in OpType._VALUES_TO_NAMES:
             #    print("[ {} ] {}".format(str(op.type), str(OpType._VALUES_TO_NAMES[op.type])))
 #=========================================================================================================================================#
+            if op.type == 5:
+                print ("[ 5 ] NOTIFIED ADD CONTACT")
+                if settings["autoAdd"] == True:
+                    client.findAndAddContactsByMid(op.param1)
+                client.sendMessage(op.param1, "Halo {} terimakasih telah menambahkan saya sebagai teman :3".format(str(client.getContact(op.param1).displayName)))
+                arg = "   New Friend : {}".format(str(client.getContact(op.param1).displayName))
+                print (arg)
+
+            if op.type == 11:
+                print ("[ 11 ] NOTIFIED UPDATE GROUP")
+                if op.param3 == "1":
+                    group = client.getGroup(op.param1)
+                    contact = client.getContact(op.param2)
+                    arg = "   Changed : Group Name"
+                    arg += "\n   New Group Name : {}".format(str(group.name))
+                    arg += "\n   Executor : {}".format(str(contact.displayName))
+                    print (arg)
+                elif op.param3 == "4":
+                    group = client.getGroup(op.param1)
+                    contact = client.getContact(op.param2)
+                    if group.preventedJoinByTicket == False:
+                        gQr = "Opened"
+                    else:
+                        gQr = "Closed"
+                    arg = "   Changed : Group Qr"
+                    arg += "\n   Group Name : {}".format(str(group.name))
+                    arg += "\n   New Group Qr Status : {}".format(gQr)
+                    arg += "\n   Executor : {}".format(str(contact.displayName))
+                    print (arg)
+
+            if op.type == 13:
+                print ("[ 13 ] NOTIFIED INVITE INTO GROUP")
+                group = client.getGroup(op.param1)
+                contact = client.getContact(op.param2)
+                if settings["autoJoin"] == True:
+                    if settings["autoReject"]["status"] == True:
+                        if len(group.members) > settings["autoReject"]["members"]:
+                            client.acceptGroupInvitation(op.param1)
+                        else:
+                            client.rejectGroupInvitation(op.param1)
+                    else:
+                        client.acceptGroupInvitation(op.param1)
+                gInviMids = []
+                for z in group.invitee:
+                    if z.mid in op.param3:
+                        gInviMids.append(z.mid)
+                listContact = ""
+                if gInviMids != []:
+                    for j in gInviMids:
+                        name_ = client.getContact(j).displayName
+                        listContact += "\n      + {}".format(str(name_))
+
+                arg = "   Group Name : {}".format(str(group.name))
+                arg += "\n   Executor : {}".format(str(contact.displayName))
+                arg += "\n   List User Invited : {}".format(str(listContact))
+                print (arg)
+
+            if op.type == 17:
+                print ("[ 17 ]  NOTIFIED ACCEPT GROUP INVITATION")
+                group = client.getGroup(op.param1)
+                contact = client.getContact(op.param2)
+                arg = "   Group Name : {}".format(str(group.name))
+                arg += "\n   User Join : {}".format(str(contact.displayName))
+                print (arg)
+
+            if op.type == 19:
+                print ("[ 19 ] NOTIFIED KICKOUT FROM GROUP")
+                group = client.getGroup(op.param1)
+                contact = client.getContact(op.param2)
+                victim = client.getContact(op.param3)
+                arg = "   Group Name : {}".format(str(group.name))
+                arg += "\n   Executor : {}".format(str(contact.displayName))
+                arg += "\n   Victim : {}".format(str(victim.displayName))
+                print (arg)
+
+            if op.type == 22:
+                print ("[ 22 ] NOTIFIED INVITE INTO ROOM")
+                if settings["autoLeave"] == True:
+                    client.sendMessage(op.param1, "Goblok ngapain invite gw")
+                    client.leaveRoom(op.param1)
+
+            if op.type == 24:
+                print ("[ 24 ] NOTIFIED LEAVE ROOM")
+                if settings["autoLeave"] == True:
+                    client.sendMessage(op.param1, "Goblok ngapain invite gw")
+                    client.leaveRoom(op.param1)
+                    
             if op.type == 26:
                 msg = op.message
                 if msg.text != None:
@@ -140,6 +255,8 @@ while True:
                                         client.sendText(receiver, 'gunakan key sticker angka bukan huruf')
                                 except Exception as e:
                                     client.sendText(receiver, str(e))
+                            elif msg.text in ["Key","Help","key","help"]:
+                                client.sendText(msg.to,helpMessage)
                             elif "yt:" in msg.text.lower():
                                 try:
                                     query = msg.text.replace("yt:", "")
@@ -285,6 +402,9 @@ while True:
                                     client.sendText(receiver, cctv['sidermem'][msg.to])
                                 else:
                                     client.sendText(receiver, "Heh belom di Set")
+                            elif text.lower == "papay":
+                                client.sendMessage(to, "Mencoba keluar dari group")
+                                client.leaveGroup(to)
                             elif text.lower() == 'mode:self':
                                 mode = 'self'
                                 client.sendText(receiver, 'Mode Public Off')
