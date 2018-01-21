@@ -43,6 +43,24 @@ helpMessage ="""
 
 poll = LinePoll(client)
 mode='self'
+
+settings = {
+    "restartPoint":{},
+    "restartBot":{},
+    "timeRestart":{},
+    "userAgent":{},
+    "keyCommand":".",
+    "autoAdd":False,
+    "autoJoin":False,
+    "autoReject":False,
+    "autoLeave":True,
+    "autoRead":False,
+    "server":{},
+    "changePicture":False,
+    "changeGroupPicture":False,
+    "autoJoinTicket":False,
+}
+
 cctv={
     "cyduk":{},
     "point":{},
