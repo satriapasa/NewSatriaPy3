@@ -39,6 +39,8 @@ helpMessage ="""
 【22】 Mode:publik
 【23】 Restart
 【24】 Papay
+
+─┅═✥SatriaNew✥═┅─
 """
 
 poll = LinePoll(client)
