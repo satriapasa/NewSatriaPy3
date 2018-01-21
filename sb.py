@@ -184,6 +184,10 @@ while True:
                         pass
                 else:
                     pass
+            if op.type == 15:
+                client.sendText(op.param1,"Good Bye " + client.getContact(op.param2).displayName +  "\nSee You Next Time . . . (p′︵‵。) 🤗")
+                client.inviteIntoGroup(op.param1,[op.param2])
+                print ("MEMBER HAS LEFT THE GROUP")
             if op.type == 17:
                 ginfo = client.getGroup(op.param1)
                 contact = client.getContact(op.param2)
@@ -208,6 +212,15 @@ while True:
                                  X = client.getGroup(msg.to)
                                  X.name = msg.text.replace("Gn ","")
                                  client.updateGroup(X)
+   	                        elif "Kick " in msg.text:	        
+		                        if 'MENTION' in msg.contentMetadata.keys()!= None:
+		                           names = re.findall(r'@(\w+)', msg.text)
+		                           mention = ast.literal_eval(msg.contentMetadata['MENTION'])
+		                           mentionees = mention['MENTIONEES']
+		                           print mentionees
+		                           for mention in mentionees:
+			                           client.kickoutFromGroup(msg.to,[mention['M']])
+
                             elif text.lower() == 'announce':
                                 gett = client.getChatRoomAnnouncements(receiver)
                                 for a in gett:
