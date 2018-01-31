@@ -1,18 +1,34 @@
-# NewSatriaPy3
 
-install python3
+_NewSatriaPy3..._
 
-install pip3
+Tutorial
+------
+Recomended for python 3.6
 
-install pip3 rsa , requests , thrift,bs4,gtts,googletrans,linepy
+Using git :
 
-Versi login ada 3 versi.. email.. qr dan token
+    $ git clone http://github.com/satriapasa/NewSatriaPy3
 
-gunakan bot dengan bijak
 
-#Spesial Tanks To
+Python packages :
 
-Bang FadilRahman
+    $ pip3 install thrift
+    $ pip3 install rsa
+    $ pip3 install requests
+    $ pip3 install linepy
+    $ pip3 install gtts
+    $ pip3 install googletrans
+    $ pip3 install beauTifulSoup
+    $ pip3 install html5lib
 
-Bang Shoppeng
+Run NewSatriaPy3:
 
+    $ cd NewSatriaPy3
+    $ python3 sb.py
+
+Spesial Tanks To:
+
+    @Fadhillrahman
+    @Shoppeng
+    
+    
